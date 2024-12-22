@@ -1,10 +1,11 @@
 {
   "version": "0.2.0",
   "configurations": [
+    
     {
       "name": "cds serve",
       "request": "launch",
-      "type": "node",
+      "type": "node-terminal",
       "cwd": "${workspaceFolder}",
       "runtimeExecutable": "cds",
       "args": [
@@ -14,7 +15,8 @@
       ],
       "skipFiles": [
         "<node_internals>/**"
-      ]
+      ],
+      "command": "cds watch"
     }
   ]
 }

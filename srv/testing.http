@@ -1,0 +1,70 @@
+# Put the triple hash on top of the every call link so then the send request button appear
+
+###Get the service data locally
+http://localhost:4004/odata/v4/CatalogService
+
+### Get metadata of the service
+http://localhost:4004/odata/v4/CatalogService/$metadata
+
+### Get the count of the Entity Set
+http://localhost:4004/odata/v4/CatalogService/ProductSet/$count
+
+### Get the single entity by id of the Entity Set
+http://localhost:4004/odata/v4/CatalogService/ProductSet/74867AD200E41EDBA5D8B06B26EB4052
+
+### Get the single entity association data of the Entity Set
+http://localhost:4004/odata/v4/CatalogService/ProductSet/74867AD200E41EDBA5D8B06B26EB4052?$expand=SUPPLIER_GUID
+
+### Get the employee send data
+http://localhost:4004/odata/v4/CatalogService/EmployeeSet
+
+### Making the post call 
+
+POST http://localhost:4004/odata/v4/CatalogService/EmployeeSet
+Content-Type: application/json
+
+{
+    "nameFirst": "Yash",
+    "nameMiddle": null,
+    "nameLast": "Mitawa",
+    "nameInitials": null,
+    "sex": "M",
+    "language": "E",
+    "phoneNumber": "8239710382",
+    "email": "yash@soyuztechnologies.com",
+    "loginName": "YASH",
+    "Currency_code": "INR",
+    "salaryAmount": 155549,
+    "accountNumber": "111222333",
+    "bankId": "510005",
+    "bankName": "Federal Bank of India" 
+}
+
+
+### Making the Get call to get the single employee data 
+GET http://localhost:4004/odata/v4/CatalogService/EmployeeSet/c987875e-b12d-4bb8-907a-09080bb55b52
+
+### Patch the employee data 
+PATCH  http://localhost:4004/odata/v4/CatalogService/EmployeeSet/c987875e-b12d-4bb8-907a-09080bb55b52
+Content-Type: application/json
+
+{
+    "salaryAmount": 1234242
+}
+
+
+### Delete the employee data 
+DELETE  http://localhost:4004/odata/v4/CatalogService/EmployeeSet/c987875e-b12d-4bb8-907a-09080bb55b52
+
+### Getting the single POs
+GET  http://localhost:4004/odata/v4/CatalogService/POs/74867AD200E41EDBA5D8B0C98DC28052
+
+### Getting the single POs
+POST http://localhost:4004/odata/v4/CatalogService/POs/74867AD200E41EDBA5D8B0C98DC28052/boost
+Content-Type: application/json
+
+{}
+
+### Calling the CAP function
+GET http://localhost:4004/odata/v4/CatalogService/POs/74867AD200E41EDBA5D8B0C98DC28052/largestOrder()
+Content-Type: application/json
