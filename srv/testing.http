@@ -34,7 +34,7 @@ Content-Type: application/json
     "email": "yash@soyuztechnologies.com",
     "loginName": "YASH",
     "Currency_code": "INR",
-    "salaryAmount": 155549,
+    "salaryAmount": 15554900,
     "accountNumber": "111222333",
     "bankId": "510005",
     "bankName": "Federal Bank of India" 
@@ -67,4 +67,19 @@ Content-Type: application/json
 
 ### Calling the CAP function
 GET http://localhost:4004/odata/v4/CatalogService/POs/74867AD200E41EDBA5D8B0C98DC28052/largestOrder()
+Content-Type: application/json
+
+
+### Calling the metadata of the cds view 
+GET http://localhost:4004/odata/v4/MyService/$metadata
+Content-Type: application/json
+
+
+### Calling the generic handler customized data 
+GET http://localhost:4004/odata/v4/MyService/ReadEmployeeSrv
+Content-Type: application/json
+
+
+### Calling the generic handler customized data with the condition 
+GET http://localhost:4004/odata/v4/MyService/ReadEmployeeSrv/02BD2137-0890-1EEA-A6C2-BB55C197C7FB
 Content-Type: application/json

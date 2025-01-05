@@ -1,6 +1,13 @@
 module.exports = cds.service.impl(async function(){
 
-    const {POs} = this.entities;
+    const {POs, EmployeeSet} = this.entities;
+    // console.log(this.entities);
+    // Implementing the generic handle 
+    this.before(['CREATE', 'PATCH'], EmployeeSet, (req)=>{
+        if(req.data.salaryAmount >= 1000000){
+            req.error(500, 'Hello Dear, you cant put the value higher that the 1000000');
+        }
+    })
 
     this.on('boost', async (req)=> {
         try {
