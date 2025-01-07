@@ -1,121 +1,4 @@
 using CatalogService as service from '../../srv/CatalogService';
-annotate service.BusinessPartnerSet with @(
-    UI.FieldGroup #GeneratedGroup : {
-        $Type : 'UI.FieldGroupType',
-        Data : [
-            {
-                $Type : 'UI.DataField',
-                Label : 'NODE_KEY',
-                Value : NODE_KEY,
-            },
-            {
-                $Type : 'UI.DataField',
-                Label : 'BP_ROLE',
-                Value : BP_ROLE,
-            },
-            {
-                $Type : 'UI.DataField',
-                Label : 'EMAIL_ADDRESS',
-                Value : EMAIL_ADDRESS,
-            },
-            {
-                $Type : 'UI.DataField',
-                Label : 'ADDRESS_GUID_NODE_KEY',
-                Value : ADDRESS_GUID_NODE_KEY,
-            },
-            {
-                $Type : 'UI.DataField',
-                Label : 'PHONE_NUMBER',
-                Value : PHONE_NUMBER,
-            },
-            {
-                $Type : 'UI.DataField',
-                Label : 'FAX_NUMBER',
-                Value : FAX_NUMBER,
-            },
-            {
-                $Type : 'UI.DataField',
-                Label : 'WEB_ADDRESS',
-                Value : WEB_ADDRESS,
-            },
-            {
-                $Type : 'UI.DataField',
-                Label : 'BP_ID',
-                Value : BP_ID,
-            },
-            {
-                $Type : 'UI.DataField',
-                Label : 'COMPANY_NAME',
-                Value : COMPANY_NAME,
-            },
-        ],
-    },
-    UI.Facets : [
-        {
-            $Type : 'UI.ReferenceFacet',
-            ID : 'GeneratedFacet1',
-            Label : 'General Information',
-            Target : '@UI.FieldGroup#GeneratedGroup',
-        },
-    ],
-    UI.LineItem : [
-        {
-            $Type : 'UI.DataField',
-            Value : NODE_KEY,
-        },
-        {
-            $Type : 'UI.DataField',
-            Value : BP_ROLE,
-        },
-        {
-            $Type : 'UI.DataField',
-            Value : EMAIL_ADDRESS,
-        },
-        {
-            $Type : 'UI.DataField',
-            Value : ADDRESS_GUID_NODE_KEY,
-        },
-        {
-            $Type : 'UI.DataField',
-            Value : PHONE_NUMBER,
-        }
-    ],
-    UI.SelectionFields :  [
-        EMAIL_ADDRESS,
-        BP_ID
-    ]
-);
-
-annotate service.BusinessPartnerSet with {
-    ADDRESS_GUID @Common.ValueList : {
-        $Type : 'Common.ValueListType',
-        CollectionPath : 'AddressSet',
-        Parameters : [
-            {
-                $Type : 'Common.ValueListParameterInOut',
-                LocalDataProperty : ADDRESS_GUID_NODE_KEY,
-                ValueListProperty : 'NODE_KEY',
-            },
-            {
-                $Type : 'Common.ValueListParameterDisplayOnly',
-                ValueListProperty : 'CITY',
-            },
-            {
-                $Type : 'Common.ValueListParameterDisplayOnly',
-                ValueListProperty : 'POSTAL_CODE',
-            },
-            {
-                $Type : 'Common.ValueListParameterDisplayOnly',
-                ValueListProperty : 'STREET',
-            },
-            {
-                $Type : 'Common.ValueListParameterDisplayOnly',
-                ValueListProperty : 'BUILDING',
-            },
-        ],
-    }
-};
-
 annotate service.POs with @(
     UI.LineItem: [
         {
@@ -162,7 +45,145 @@ annotate service.POs with @(
             Value : PARTNER_GUID.COMPANY_NAME
         }
 
+    },
+    UI.Facets:[
+        {
+            $Type : 'UI.CollectionFacet',
+            Label: 'More Info',
+            Facets: [
+                {
+                    $Type: 'UI.ReferenceFacet',
+                    Label: 'Addition Data',
+                    Target: '@UI.Identification'
+                },
+                {
+                    $Type: 'UI.ReferenceFacet',
+                    Label : 'Pricing Data',
+                    Target: '@UI.FieldGroup#MoreInfo1'
+                },
+                {
+                    $Type: 'UI.ReferenceFacet',
+                    Label : 'Status Data',
+                    Target: '@UI.FieldGroup#MoreInfo2'
+                }
+            ]
+        },
+        {
+            $Type : 'UI.ReferenceFacet',
+            Target : 'Items/@UI.LineItem'
+        }
+    ],
+    UI.Identification: [
+        {
+            $Type : 'UI.DataField',
+            Value : PO_ID,
+        },
+        {
+            $Type : 'UI.DataField',
+            Value : PARTNER_GUID_NODE_KEY,
+        }
+    ],
+    UI.FieldGroup #MoreInfo1 : {
+        Label : 'Price Info',
+        Data : [
+            {
+                $Type : 'UI.DataField',
+                Value : GROSS_AMOUNT,
+            },
+            {
+                $Type : 'UI.DataField',
+                Value : NET_AMOUNT,
+            },
+            {
+                $Type : 'UI.DataField',
+                Value : TAX_AMOUNT,
+            }
+        ]
+    },
+    UI.FieldGroup #MoreInfo2 : {
+        Label : 'Status',
+        Data : [
+            {
+                $Type : 'UI.DataField',
+                Value : OVERALL_STATUS,
+            },
+            {
+                $Type : 'UI.DataField',
+                Value : LIFECYCLE_STATUS,
+            },
+            {
+                $Type : 'UI.DataField',
+                Value : CURRENCY_code,
+            }
+        ]
     }
 );
 
+annotate service.POItems with @(
+    UI.LineItem : [
+        {
+            $Type : 'UI.DataField',
+            Value : PO_ITEM_POS
+        },
+        {
+            $Type : 'UI.DataField',
+            Value : PRODUCT_GUID_NODE_KEY
+        },
+        {
+            $Type : 'UI.DataField',
+            Value : GROSS_AMOUNT
+        },
+        {
+            $Type : 'UI.DataField',
+            Value : CURRENCY_code
+        }
+    ],
+    UI.HeaderInfo : {
+        TypeName : 'Item',
+        TypeNamePlural : 'Items',
+        Title : {
+            $Type: 'UI.DataField',
+            Value : PO_ITEM_POS
+        },
+        Description : {
+            $Type : 'UI.DataField',
+            Value : PRODUCT_GUID.DESCRIPTION,
+        },
+    }
+);
 
+annotate service.POs with {
+    PARTNER_GUID@(
+        Common.Text : PARTNER_GUID.COMPANY_NAME,
+        Common.ValueList.entity : Service.BusinessPartnerSet
+    )
+};
+
+annotate service.POItems with {
+    PARTNER_GUID@(
+        Common.Text : PRODUCT_GUID.DESCRIPTION,
+        Common.ValueList.entity : Service.ProductSet
+    )
+};
+
+
+
+@cds.odata.valuelist
+annotate service.BusinessPartnerSet with@(
+    UI.Identification : [
+        {
+            $Type : 'UI.DataField',
+            Value : COMPANY_NAME
+        }
+    ]
+);
+
+@cds.odata.valuelist
+annotate service.ProductSet with@(
+    UI.Identification : [
+        {
+            $Type : 'UI.DataField',
+            Value : DESCRIPTION
+        }
+    ]
+);

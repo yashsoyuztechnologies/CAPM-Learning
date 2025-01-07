@@ -62,7 +62,8 @@
       "libs": {
         "sap.m": {},
         "sap.ui.core": {},
-        "sap.fe.templates": {}
+        "sap.fe.templates": {},
+        "sap.f": {}
       }
     },
     "contentDensities": {
@@ -94,17 +95,37 @@
       "css": []
     },
     "routing": {
-      "config": {},
+      "config": {
+        "flexibleColumnLayout": {
+          "defaultTwoColumnLayoutType": "TwoColumnsMidExpanded",
+          "defaultThreeColumnLayoutType": "ThreeColumnsMidExpanded"
+        },
+        "routerClass": "sap.f.routing.Router"
+      },
       "routes": [
         {
           "pattern": ":?query:",
           "name": "BusinessPartnerSetList",
-          "target": "BusinessPartnerSetList"
+          "target": [
+            "BusinessPartnerSetList"
+          ]
         },
         {
-          "pattern": "BusinessPartnerSet({key}):?query:",
-          "name": "BusinessPartnerSetObjectPage",
-          "target": "BusinessPartnerSetObjectPage"
+          "pattern": "POs({key}):?query:",
+          "name": "POsObjectPage",
+          "target": [
+            "BusinessPartnerSetList",
+            "POsObjectPage"
+          ]
+        },
+        {
+          "name": "POs_ItemsObjectPage",
+          "pattern": "POs({key})/Items({ItemsKey}):?query:",
+          "target": [
+            "BusinessPartnerSetList",
+            "POsObjectPage",
+            "POs_ItemsObjectPage"
+          ]
         }
       ],
       "targets": {
@@ -117,9 +138,9 @@
               "contextPath": "/POs",
               "variantManagement": "Page",
               "navigation": {
-                "BusinessPartnerSet": {
+                "POs": {
                   "detail": {
-                    "route": "BusinessPartnerSetObjectPage"
+                    "route": "POsObjectPage"
                   }
                 }
               },
@@ -132,20 +153,50 @@
               },
               "initialLoad": "Enabled"
             }
-          }
+          },
+          "controlAggregation": "beginColumnPages",
+          "contextPattern": ""
         },
-        "BusinessPartnerSetObjectPage": {
+        "POsObjectPage": {
           "type": "Component",
-          "id": "BusinessPartnerSetObjectPage",
+          "id": "POsObjectPage",
           "name": "sap.fe.templates.ObjectPage",
           "options": {
             "settings": {
               "editableHeaderContent": false,
-              "contextPath": "/POs"
+              "contextPath": "/POs",
+              "navigation": {
+                "Items": {
+                  "detail": {
+                    "route": "POs_ItemsObjectPage"
+                  }
+                }
+              }
             }
-          }
+          },
+          "controlAggregation": "midColumnPages",
+          "contextPattern": "/POs({key})"
+        },
+        "POs_ItemsObjectPage": {
+          "type": "Component",
+          "id": "POs_ItemsObjectPage",
+          "name": "sap.fe.templates.ObjectPage",
+          "options": {
+            "settings": {
+              "navigation": {},
+              "contextPath": "/POs/Items"
+            }
+          },
+          "controlAggregation": "endColumnPages",
+          "contextPattern": "/POs({key})/Items({ItemsKey})"
         }
       }
+    },
+    "rootView": {
+      "viewName": "sap.fe.templates.RootContainer.view.Fcl",
+      "type": "XML",
+      "async": true,
+      "id": "appRootView"
     }
   },
   "sap.fiori": {

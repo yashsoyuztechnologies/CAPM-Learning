@@ -7,7 +7,7 @@ module.exports = cds.service.impl(async function(){
         if(req.data.salaryAmount >= 1000000){
             req.error(500, 'Hello Dear, you cant put the value higher that the 1000000');
         }
-    })
+    });
 
     this.on('boost', async (req)=> {
         try {
@@ -20,7 +20,7 @@ module.exports = cds.service.impl(async function(){
         } catch (error) {
             return 'Error = ' + error.toString();            
         }   
-    })
+    });
 
     this.on('largestOrder', async (req)=> {
         try {
@@ -32,6 +32,16 @@ module.exports = cds.service.impl(async function(){
         } catch (error) {
             return 'Error = ' + error.toString();            
         }   
-    })
+    });
+
+    this.on('getOrderStatus', async(req, res)=>{
+        try {
+            return {
+                "OVERALL_STATUS": 'N'
+            }
+        } catch (error) {
+            return `Error = ${error.toString()}`
+        }
+    });
 
 });
