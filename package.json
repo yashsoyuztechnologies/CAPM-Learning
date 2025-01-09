@@ -23,6 +23,9 @@
     "app/purchaseorderapp"
   ],
   "cds": {
+    "requires": {
+      "db": "hana"
+    },
     "sql": {
       "native_hana_associations": false
     }

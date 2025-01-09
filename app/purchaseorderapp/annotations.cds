@@ -160,7 +160,7 @@ annotate service.POs with {
 };
 
 annotate service.POItems with {
-    PARTNER_GUID@(
+    PRODUCT_GUID@(
         Common.Text : PRODUCT_GUID.DESCRIPTION,
         Common.ValueList.entity : Service.ProductSet
     )

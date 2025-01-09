@@ -43,7 +43,7 @@ context master {
         WEIGHT_UNIT: String(2);
         WEIGHT_MEASURE: Decimal(5, 2);
         CURRENCY_CODE: String(4);
-        PRICE : Decimal(5, 2);
+        PRICE : Decimal(10, 2);
         WIDTH : Decimal(5, 2);
         HEIGHT : Decimal(5, 2);
         DEPTH : Decimal(5, 2);
@@ -63,7 +63,7 @@ context master {
         Currency: Currency;
         salaryAmount: common.AmountT;
         accountNumber: String(16);
-        bankId: String(8);
+        bankId: String(30);
         bankName: String(64);
     }
     
