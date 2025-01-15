@@ -83,3 +83,8 @@ Content-Type: application/json
 ### Calling the generic handler customized data with the condition 
 GET http://localhost:4004/odata/v4/MyService/ReadEmployeeSrv/02BD2137-0890-1EEA-A6C2-BB55C197C7FB
 Content-Type: application/json
+
+
+### Testing the application of the application security 
+GET http://localhost:4004/odata/v4/CatalogService/EmployeeSet
+Authorization: Basic yash: 

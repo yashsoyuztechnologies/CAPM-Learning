@@ -3,15 +3,15 @@ using {
     yash.db.transaction
 } from '../db/data-model';
 
-service CatalogService @(path : 'CatalogService') {
-
+service CatalogService @(path : 'CatalogService', requires: 'authenticated-user') {
     @Capabilities : {Deletable}
     entity BusinessPartnerSet as projection on master.businesspartner;
-    // @readonly
-    entity EmployeeSet as projection on master.employees;
+    @restrict : [
+        {grant : 'READ', to : 'Viewer', where:'bankName = $user.BankName'},
+        {grant : 'READ', to : 'Admin'}]
+    entity EmployeeSet as projection on master.employees; 
     entity AddressSet as projection on master.address;
     entity ProductSet as projection on master.product;
-    function getOrderStatus() returns POs;
     entity POs 
     @(
         odata.draft.enabled : true,
@@ -40,6 +40,7 @@ service CatalogService @(path : 'CatalogService') {
         action boost() returns POs;
         function largestOrder() returns POs;
     };
+    function getOrderStatus() returns POs;
     entity POItems as projection on transaction.poitems;
 
 }

@@ -8,7 +8,8 @@
   "dependencies": {
     "@sap/cds": "^8",
     "express": "^4",
-    "@cap-js/hana": "^1"
+    "@cap-js/hana": "^1",
+    "@sap/xssec": "^4"
   },
   "devDependencies": {
     "@cap-js/sqlite": "^1",
@@ -24,7 +25,32 @@
   ],
   "cds": {
     "requires": {
-      "db": "hana"
+      "db": "hana",
+      "uaa": {
+        "kind": "xsuaa"
+      },
+      "auth":{
+        "[development]":{
+          "strategy": "mocked",
+          "users":{
+            "yash":{
+              "roles":["Viewer"],
+              "userAttributes":{
+                "BankName": ["Deutsches Geldinstitut"]
+              }
+            },
+            "dvd":{
+              "roles":["Viewer", "Admin"],
+              "userAttributes":{
+                "BankName": [""]
+              }
+            }
+          } 
+        },
+        "[production]":{
+          "strategy": "JWT"
+        }
+      }
     },
     "sql": {
       "native_hana_associations": false
